@@ -1,0 +1,161 @@
+<div class="container" *ngIf="isconfirmModalDisplayed">
+    <div style="display: flex; justify-content: center; vertical-align: middle;margin-top: 35vh;">
+        <mat-card style="width: 500px;">
+            <mat-card-title style="font-size: 20px;">
+                Delete User
+                <span style="float: right;">
+                    <button mat-icon-button color="gray" aria-label="Close" (click)="closeModal()">
+                        <mat-icon style="color: gray;">close</mat-icon>
+                    </button>
+                </span>
+            </mat-card-title>
+            <mat-divider style="margin-top: 10px; clear: both;"></mat-divider>
+            <p style="margin: 20px 0; clear: both;">Are you sure want to delete {{this.deleteUser.uname}} ?</p>
+            <mat-card-actions style="text-align: right;">
+                <button class="rounded" style="    border-radius: 20px !important; color: #00a99d;" mat-stroked-button
+                    (click)="closeModal()">No</button>
+                <button class="rounded"
+                    style="border-radius: 20px !important; ; background-color: #00a99d; color: #fff;" mat-raised-button
+                    (click)="acceptConfirmModal()">Yes</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+
+
+
+<div class="container" *ngIf="isEditModalDisplayed">
+    <div style="display: flex; justify-content: center; vertical-align: middle;margin-top: 5vh;">
+        <mat-card style="width: 500px;">
+            <mat-card-title style="font-size: 20px;">
+                Edit User
+                <span style="float: right;">
+                    <button mat-icon-button color="gray" aria-label="Close" (click)="closeModal()">
+                        <mat-icon style="color: gray;">close</mat-icon>
+                    </button>
+                </span>
+            </mat-card-title>
+            <mat-divider style="margin-top: 10px; margin-bottom: 20px; clear: both;"></mat-divider>
+            <form [formGroup]="editForm">
+
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px; border-color: #00a99d;">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="uname">
+                </mat-form-field>
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px; border-color: #00a99d;">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" type="email">
+                </mat-form-field>
+                <mat-radio-group aria-label="gender" formControlName="gender">
+                    <mat-label>Gender</mat-label>
+                    <mat-radio-button style="margin-left:10px" value="male">Male</mat-radio-button>
+                    <mat-radio-button style="margin-left:10px" value="female">Female</mat-radio-button>
+                </mat-radio-group>
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px; border-color: #00a99d;">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px; border-color: #00a99d;">
+                    <mat-label>Address</mat-label>
+                    <textarea matInput formControlName="address"></textarea>
+                </mat-form-field>
+
+            </form>
+
+            <mat-card-actions style="text-align: right;">
+                <button class="mb-3" style="border-radius: 20px !important; ; background-color: #00a99d; color: #fff;"
+                    mat-raised-button (click)="submitEditModal()">Submit</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+
+
+<div *ngIf="mainPage">
+    <div class="row mt-2">
+        <div class="col-9">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="width: 100%;">
+
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="uname">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.uname}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="gender">
+                    <th mat-header-cell *matHeaderCellDef> Gender </th>
+                    <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef> Address </th>
+                    <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="dob">
+                    <th mat-header-cell *matHeaderCellDef> Date of Birth </th>
+                    <td mat-cell *matCellDef="let element"> {{element.dob}} </td>
+                </ng-container>
+
+                <!-- edit icon -->
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="gray" aria-label="edit" (click)="edit(element)">
+                            <mat-icon style="color: gray;">edit</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <!-- delete icon -->
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="gray" aria-label="delete" (click)="delete(element)">
+                            <mat-icon style="color: gray;">delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator appearance="none" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of User">
+            </mat-paginator>
+
+
+
+
+        </div>
+        <div class="col-3">
+            <!-- <mat-card> -->
+            <mat-card style="width: 300px;">
+                <mat-card-title style="font-size: 20px;">
+                    PROGRESS
+                </mat-card-title>
+                <mat-divider style="margin-top: 10px; "></mat-divider>
+                <p>
+                    <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+                </p>
+                <div>Male Users: {{maleUser}} </div>
+                <div>Female Users: {{femaleUser}}</div>
+            </mat-card>
+            <!-- </mat-card> -->
+        </div>
+
+    </div>
+</div>

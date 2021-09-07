@@ -1,0 +1,16 @@
+[
+  {
+    "uname": "Sew Jeon",
+    "email": "sewheon@gmail.com",
+    "gender": "male",
+    "address": "471 Duncan Avemue, New York",
+    "dob": "Wed Sep 22 2021 00:00:00 GMT+0530"
+  },
+  {
+    "uname": "John Doe",
+    "email": "johndoe@gmail.com",
+    "gender": "female",
+    "address": "977 Hartway Street, SD",
+    "dob": "Wed Sep 21 2021 00:00:00 GMT+0530"
+  }
+]
